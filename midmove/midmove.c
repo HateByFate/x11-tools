@@ -21,8 +21,8 @@
  *   6. В чужих окнах (не kitty) нажатие сразу отдаётся приложению через
  *      ReplayPointer — там средняя кнопка работает полностью штатно.
  *
- * Сборка:  gcc -O2 -Wall -Wextra -o midmove midmove.c -lX11 -ldl
- * Запуск:  ./midmove [-v] [-t порог_в_пикселях]
+ * Сборка:  gcc -O2 -Wall -Wextra -DVERSION=\"0.1.0\" -o midmove midmove.c -lX11 -ldl
+ * Запуск:  ./midmove [-v] [-t порог_в_пикселях] [-V]
  */
 
 #define _GNU_SOURCE
@@ -30,12 +30,16 @@
 #include <X11/Xutil.h>
 #include <X11/Xatom.h>
 #include <dlfcn.h>
+#include <getopt.h>
 #include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 #include <sys/select.h>
 #include <unistd.h>
 
+#ifndef VERSION
+#define VERSION "0.1.0"
+#endif
 #define DEFAULT_THRESHOLD 3
 #define MAX_TREE_DEPTH    16
 #define IDLE              0
@@ -264,14 +268,21 @@ int main(int argc, char **argv)
     void *lib;
     int opt;
 
-    while ((opt = getopt(argc, argv, "vt:h")) != -1) {
+    static struct option longopts[] = {
+        {"version", no_argument, NULL, 'V'},
+        {0, 0, 0, 0},
+    };
+    while ((opt = getopt_long(argc, argv, "vVt:h", longopts, NULL)) != -1) {
         switch (opt) {
         case 'v': verbose = 1; break;
+        case 'V': printf("midmove %s\n", VERSION); return 0;
         case 't': threshold = atoi(optarg); break;
+        case 0: printf("midmove %s\n", VERSION); return 0; /* --version */
         default:
             fprintf(stderr,
-                    "usage: %s [-v] [-t threshold_px]\n"
-                    "  Средняя кнопка в окне kitty: тащить окно; без движения — обычный клик.\n",
+                    "usage: %s [-v] [-t threshold_px] [-V]\n"
+                    "  Средняя кнопка в окне kitty: тащить окно; без движения — обычный клик.\n"
+                    "  -V, --version  версия x11-tools\n",
                     argv[0]);
             return opt == 'h' ? 0 : 2;
         }

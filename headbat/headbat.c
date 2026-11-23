@@ -45,6 +45,10 @@
 #define VID_LOGITECH     0x046d
 #define PID_G435         0x0acb
 
+#ifndef VERSION
+#define VERSION "0.1.0"
+#endif
+
 static int verbose;
 static int opt_interval = DEFAULT_INTERVAL;
 static int opt_status;          /* разовый вывод и выход */
@@ -530,8 +534,9 @@ static void usage(const char *prog)
         "  --always       не пропускать опрос, когда играет звук\n"
         "  --max-silence-wait N  ждать тишины не дольше N сек (по умолч. %d)\n"
         "  -v, --verbose  подробный лог в stderr\n"
+        "  -V, --version  версия %s\n"
         "  -h, --help     эта справка\n",
-        prog, DEFAULT_INTERVAL, DEFAULT_MAX_SILENCE_WAIT);
+        prog, DEFAULT_INTERVAL, DEFAULT_MAX_SILENCE_WAIT, VERSION);
 }
 
 int main(int argc, char **argv)
@@ -549,6 +554,10 @@ int main(int argc, char **argv)
             opt_max_silence_wait = atoi(argv[++i]);
         else if (!strcmp(argv[i], "-v") || !strcmp(argv[i], "--verbose"))
             verbose = 1;
+        else if (!strcmp(argv[i], "-V") || !strcmp(argv[i], "--version")) {
+            printf("headbat %s\n", VERSION);
+            return 0;
+        }
         else if (!strcmp(argv[i], "-h") || !strcmp(argv[i], "--help")) {
             usage(argv[0]);
             return 0;
