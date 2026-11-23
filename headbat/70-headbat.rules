@@ -1,0 +1,5 @@
+# Доступ к донглу Logitech G435 (046d:0acb) без root.
+# TAG+="uaccess" выдаёт права активному локальному пользователю (systemd-logind).
+# Установка: sudo install -Dm644 70-headbat.rules /etc/udev/rules.d/70-headbat.rules
+#            sudo udevadm control --reload && sudo udevadm trigger
+KERNEL=="hidraw*", ATTRS{idVendor}=="046d", ATTRS{idProduct}=="0acb", TAG+="uaccess"

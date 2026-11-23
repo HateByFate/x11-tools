@@ -1,0 +1,10 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=headbat
+Comment=Заряд наушников Logitech G435 в трее
+Exec=@EXEC@
+Icon=audio-headphones
+Terminal=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
