@@ -1,0 +1,11 @@
+Package: x11-tools
+Version: 0.1.0
+Section: utils
+Priority: optional
+Architecture: amd64
+Maintainer: HateByFate
+Depends: libc6 (>= 2.38), libx11-6
+Description: Небольшие утилиты для X11-сессии (Debian + GNOME/mutter)
+ Небольшие C-утилиты для X11-сессии: midmove — перетаскивание окна kitty
+ средней кнопкой мыши, headbat — заряд наушников Logitech G435 в трее
+ GNOME + уведомления о низком заряде.

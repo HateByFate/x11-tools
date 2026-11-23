@@ -26,7 +26,30 @@ make test       # поднять midmove и прогнать автотесты
 make install    # поставить в ~/.local/bin и добавить автозапуск GNOME
 make uninstall  # удалить установленное
 make clean      # убрать bin/
+make release    # собрать stripped-бинарники в release/ и deb-пакет в dist/
+make deb        # собрать только deb: dist/x11-tools_<верс>_amd64.deb
 ```
+
+## Установка
+
+Из релиза (рекомендуется):
+
+```sh
+sudo dpkg -i dist/x11-tools_0.1.0_amd64.deb
+sudo udevadm control --reload && sudo udevadm trigger
+```
+
+Пакет содержит бинарники в `/usr/bin`, автозапуск в `/etc/xdg/autostart`, udev-rule для
+доступа к G435 в `/usr/lib/udev/rules.d`. Для доступа к донглу без root по-прежнему нужен
+`sudo install -Dm644 headbat/70-headbat.rules /etc/udev/rules.d/70-headbat.rules`.
+
+Из исходников:
+
+```sh
+make install
+```
+
+Обе утилиты умеют версию: `midmove -V` / `headbat -V` (или `--version`).
 
 ## Требования и ограничения
 
