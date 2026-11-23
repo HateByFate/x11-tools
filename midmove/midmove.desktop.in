@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Version=1.0
+Name=midmove
+Comment=Перетаскивание окна kitty средней кнопкой мыши
+Exec=@EXEC@
+Terminal=false
+NoDisplay=true
+X-GNOME-Autostart-enabled=true
